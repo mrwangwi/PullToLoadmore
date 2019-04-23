@@ -1,3 +1,17 @@
+
+    allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+    dependencies {
+	     implementation 'com.github.mrwangwi:PullToLoadmore:Tag'
+	}
+
+
+
 1.in Xml
 
     <com.mrwangwei.pullloadmore.PullLoadMoreRecyclerView
