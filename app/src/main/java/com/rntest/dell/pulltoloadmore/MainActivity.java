@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         testAdapter.setPagesize(10, pullLoadMore);
         testAdapter.addHeaderView(R.layout.top_layout);
         testAdapter.addFooterView(R.layout.bottom_layout);
-        testAdapter.addItemDecoration(R.drawable.shape_line_dash);
         pullLoadMore.setAdapter(testAdapter);
         pullLoadMore.setOnPullLoadMoreListener(this);
     }
