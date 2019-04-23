@@ -7,7 +7,7 @@
 	}
 
     dependencies {
-	     implementation 'com.github.mrwangwi:PullToLoadmore:Tag'
+	     implementation 'com.github.mrwangwi:PullToLoadmore:1.0'
 	}
 
 
