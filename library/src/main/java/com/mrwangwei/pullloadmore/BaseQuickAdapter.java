@@ -1126,6 +1126,20 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         return addHeaderView(header, -1);
     }
 
+    public void addHeaderView(int layId) {
+        View view = LayoutInflater.from(getRecyclerView().getContext()).inflate(layId, getRecyclerView(), false);
+        headView = view;
+    }
+
+    private View headView;
+
+    public void addFooterView(int layId) {
+        View view = LayoutInflater.from(getRecyclerView().getContext()).inflate(layId, getRecyclerView(), false);
+        footView = view;
+    }
+
+    private View footView;
+
     /**
      * Add header view to mHeaderLayout and set header view position in mHeaderLayout.
      * When index = -1 or index >= child count in mHeaderLayout,
@@ -2064,6 +2078,13 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
 
     public void dataNotify() {
 
+        if (headView != null) {
+            removeAllHeaderView();
+        }
+        if (footView != null) {
+            removeAllFooterView();
+        }
+
         if (mRequestLoadMoreListener == null) {
             mRequestLoadMoreListener = new RequestLoadMoreListener() {
                 @Override
@@ -2078,14 +2099,24 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
             return;
         }
 
+        if (headView != null) {
+            addHeaderView(headView);
+        }
+
         if (getData().size() % pagesize != 0) {
             setEnableLoadMore(true);
             pullLoadMore.setPushRefreshEnable(false);
+            if (footView != null) {
+                addFooterView(footView);
+            }
             loadMoreEnd();
         } else {
             if (flag == getData().size() && pullLoadMore.isLoadmore()) {
                 setEnableLoadMore(true);
                 pullLoadMore.setPushRefreshEnable(false);
+                if (footView != null) {
+                    addFooterView(footView);
+                }
                 loadMoreEnd();
             } else {
                 setEnableLoadMore(false);

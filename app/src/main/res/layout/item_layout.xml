@@ -6,6 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="#000"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -14,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="l" />
+            android:text="l"
+            android:textColor="#FFF" />
 
         <TextView
             android:id="@+id/tv_right"
@@ -22,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="r" />
+            android:text="r"
+            android:textColor="#FFF" />
     </LinearLayout>
 </LinearLayout>
