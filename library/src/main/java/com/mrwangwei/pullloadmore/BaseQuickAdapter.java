@@ -2136,10 +2136,32 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     }
 
     private void showEmptyView() {
-
-        setEmptyView(R.layout.my_complete_strategy_no_data);
+        if (isSetEmptyViewLayout) {
+            setEmptyView(emptyView);
+            if (onClickListener != null) {
+                getEmptyView().setOnClickListener(onClickListener);
+            }
+        } else {
+            setEmptyView(R.layout.no_data_layout);
+        }
         notifyDataSetChanged();
     }
+
+    private boolean isSetEmptyViewLayout;
+    private int emptyView;
+
+    public void setEmptyViewLayout(int layId) {
+        isSetEmptyViewLayout = true;
+        emptyView = layId;
+    }
+
+    public void setEmptyViewLayout(int layId, View.OnClickListener onClickListener) {
+        isSetEmptyViewLayout = true;
+        emptyView = layId;
+        this.onClickListener = onClickListener;
+    }
+
+    private View.OnClickListener onClickListener;
 
 
 }

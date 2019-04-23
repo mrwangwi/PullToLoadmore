@@ -2,6 +2,8 @@ package com.rntest.dell.pulltoloadmore;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 
 import com.mrwangwei.pullloadmore.PullLoadMoreRecyclerView;
 
@@ -24,6 +26,12 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         testAdapter.setPagesize(10, pullLoadMore);
         testAdapter.addHeaderView(R.layout.top_layout);
         testAdapter.addFooterView(R.layout.bottom_layout);
+        testAdapter.setEmptyViewLayout(R.layout.bottom_layout, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("setEmptyViewLayout", "setEmptyViewLayout");
+            }
+        });
         pullLoadMore.setAdapter(testAdapter);
         pullLoadMore.setOnPullLoadMoreListener(this);
     }
@@ -36,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
     public void onRefresh() {
         list.clear();
         page = 1;
-        list.addAll(creatList(10));
+        list.addAll(new ArrayList<TestBean>());
         testAdapter.dataNotify();
 //        list.clear();
 //        testAdapter.dataNotify();
