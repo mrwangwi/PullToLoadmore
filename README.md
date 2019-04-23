@@ -11,6 +11,7 @@
     pullLoadMore.setLinearLayout();
     adapter = new TestAdapter(R.layout.item_layout, list);
     adapter.setPagesize(10, pullLoadMore);//这句必须加 10为自定义每页条数
+    //TestAdapter继承自BaseQuickAdapter<TestBean, BaseViewHolder>，工程里有
     pullLoadMore.setAdapter(testAdapter);
     pullLoadMore.setOnPullLoadMoreListener(this);
 
