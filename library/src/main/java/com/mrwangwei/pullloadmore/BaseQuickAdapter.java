@@ -1,7 +1,6 @@
 package com.mrwangwei.pullloadmore;
 
 import android.animation.Animator;
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
