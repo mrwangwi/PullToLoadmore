@@ -503,7 +503,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      * @deprecated use {@link #addData(int, Object)} instead
      */
     @Deprecated
-    public void add(@IntRange(from = 0) int position, @NonNull T item) {
+    private void add(@IntRange(from = 0) int position, @NonNull T item) {
         addData(position, item);
     }
 
@@ -512,7 +512,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *
      * @param position
      */
-    public void addData(@IntRange(from = 0) int position, @NonNull T data) {
+    private void addData(@IntRange(from = 0) int position, @NonNull T data) {
         mData.add(position, data);
         notifyItemInserted(position + getHeaderLayoutCount());
         compatibilityDataSizeChanged(1);
@@ -521,7 +521,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     /**
      * add one new data
      */
-    public void addData(@NonNull T data) {
+    private void addData(@NonNull T data) {
         mData.add(data);
         notifyItemInserted(mData.size() + getHeaderLayoutCount());
         compatibilityDataSizeChanged(1);
@@ -555,7 +555,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      * @param position the insert position
      * @param newData  the new data collection
      */
-    public void addData(@IntRange(from = 0) int position, @NonNull Collection<? extends T> newData) {
+    private void addData(@IntRange(from = 0) int position, @NonNull Collection<? extends T> newData) {
         mData.addAll(position, newData);
         notifyItemRangeInserted(position + getHeaderLayoutCount(), newData.size());
         compatibilityDataSizeChanged(newData.size());
@@ -566,7 +566,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *
      * @param newData the new data collection
      */
-    public void addData(@NonNull Collection<? extends T> newData) {
+    private void addData(@NonNull Collection<? extends T> newData) {
         mData.addAll(newData);
         notifyItemRangeInserted(mData.size() - newData.size() + getHeaderLayoutCount(), newData.size());
         compatibilityDataSizeChanged(newData.size());
@@ -1121,7 +1121,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *
      * @param header
      */
-    public int addHeaderView(View header) {
+    private int addHeaderView(View header) {
         return addHeaderView(header, -1);
     }
 
@@ -1149,7 +1149,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *               When index = -1 or index >= child count in mHeaderLayout,
      *               the effect of this method is the same as that of {@link #addHeaderView(View)}.
      */
-    public int addHeaderView(View header, int index) {
+    private int addHeaderView(View header, int index) {
         return addHeaderView(header, index, LinearLayout.VERTICAL);
     }
 
@@ -1158,7 +1158,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      * @param index
      * @param orientation
      */
-    public int addHeaderView(View header, final int index, int orientation) {
+    private int addHeaderView(View header, final int index, int orientation) {
         if (mHeaderLayout == null) {
             mHeaderLayout = new LinearLayout(header.getContext());
             if (orientation == LinearLayout.VERTICAL) {
@@ -1207,11 +1207,11 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *
      * @param footer
      */
-    public int addFooterView(View footer) {
+    private int addFooterView(View footer) {
         return addFooterView(footer, -1, LinearLayout.VERTICAL);
     }
 
-    public int addFooterView(View footer, int index) {
+    private int addFooterView(View footer, int index) {
         return addFooterView(footer, index, LinearLayout.VERTICAL);
     }
 
@@ -1225,7 +1225,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *               When index = -1 or index >= child count in mFooterLayout,
      *               the effect of this method is the same as that of {@link #addFooterView(View)}.
      */
-    public int addFooterView(View footer, int index, int orientation) {
+    private int addFooterView(View footer, int index, int orientation) {
         if (mFooterLayout == null) {
             mFooterLayout = new LinearLayout(footer.getContext());
             if (orientation == LinearLayout.VERTICAL) {
@@ -2140,4 +2140,6 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         setEmptyView(R.layout.my_complete_strategy_no_data);
         notifyDataSetChanged();
     }
+
+
 }
