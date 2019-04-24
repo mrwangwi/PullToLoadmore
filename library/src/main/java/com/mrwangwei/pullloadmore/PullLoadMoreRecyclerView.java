@@ -29,6 +29,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private PullLoadMoreListener mPullLoadMoreListener;
+    private PullLoadListener mPullLoadListener;
     private boolean hasMore = true;
     private boolean isRefresh = false;
     private boolean isLoadMore = false;
@@ -224,6 +225,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             isLoadmore = false;
             mPullLoadMoreListener.onRefresh();
         }
+        if (mPullLoadListener != null) {
+            mPullLoadListener.onLoadRefresh();
+        }
     }
 
     public void loadMore() {
@@ -236,7 +240,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationStart(Animator animation) {
-//                            mFooterView.setVisibility(View.VISIBLE);
+
                         }
                     })
                     .start();
@@ -270,6 +274,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mPullLoadMoreListener = listener;
     }
 
+    public void setOnPullLoadListener(PullLoadListener listener) {
+        mPullLoadListener = listener;
+    }
+
 
     public boolean isLoadMore() {
         return isLoadMore;
@@ -299,5 +307,13 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         void onRefresh();
 
         void onLoadMore();
+    }
+
+    public interface PullLoadListener {
+        void onLoadRefresh();
+    }
+
+    public PullLoadMoreListener getmPullLoadMoreListener() {
+        return mPullLoadMoreListener;
     }
 }

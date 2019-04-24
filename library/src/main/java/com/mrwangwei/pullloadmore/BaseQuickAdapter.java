@@ -410,7 +410,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      *
      * @param enable True if load more is enabled, false otherwise.
      */
-    public void setEnableLoadMore(boolean enable) {
+    private void setEnableLoadMore(boolean enable) {
         int oldLoadMoreCount = getLoadMoreViewCount();
         mLoadMoreEnable = enable;
         int newLoadMoreCount = getLoadMoreViewCount();
@@ -544,7 +544,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     /**
      * change data
      */
-    public void setData(@IntRange(from = 0) int index, @NonNull T data) {
+    private void setData(@IntRange(from = 0) int index, @NonNull T data) {
         mData.set(index, data);
         notifyItemChanged(index + getHeaderLayoutCount());
     }
@@ -1358,7 +1358,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         return -1;
     }
 
-    public void setEmptyView(int layoutResId, ViewGroup viewGroup) {
+    private void setEmptyView(int layoutResId, ViewGroup viewGroup) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutResId, viewGroup, false);
         setEmptyView(view);
     }
@@ -1370,12 +1370,12 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
      * @see #bindToRecyclerView(RecyclerView)
      */
     @Deprecated
-    public void setEmptyView(int layoutResId) {
+    private void setEmptyView(int layoutResId) {
         checkNotNull();
         setEmptyView(layoutResId, getRecyclerView());
     }
 
-    public void setEmptyView(View emptyView) {
+    private void setEmptyView(View emptyView) {
         boolean insert = false;
         if (mEmptyLayout == null) {
             mEmptyLayout = new FrameLayout(emptyView.getContext());
@@ -2102,15 +2102,8 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
             addHeaderView(headView);
         }
 
-        if (getData().size() % pagesize != 0) {
-            setEnableLoadMore(true);
-            pullLoadMore.setPushRefreshEnable(false);
-            if (footView != null) {
-                addFooterView(footView);
-            }
-            loadMoreEnd();
-        } else {
-            if (flag == getData().size() && pullLoadMore.isLoadmore()) {
+        if (pullLoadMore.getmPullLoadMoreListener() != null) {
+            if (getData().size() % pagesize != 0) {
                 setEnableLoadMore(true);
                 pullLoadMore.setPushRefreshEnable(false);
                 if (footView != null) {
@@ -2118,13 +2111,27 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
                 }
                 loadMoreEnd();
             } else {
-                setEnableLoadMore(false);
-                pullLoadMore.setPushRefreshEnable(true);
+                if (flag == getData().size() && pullLoadMore.isLoadmore()) {
+                    setEnableLoadMore(true);
+                    pullLoadMore.setPushRefreshEnable(false);
+                    if (footView != null) {
+                        addFooterView(footView);
+                    }
+                    loadMoreEnd();
+                } else {
+                    setEnableLoadMore(false);
+                    pullLoadMore.setPushRefreshEnable(true);
+                }
             }
+            flag = getData().size();
+        } else {
+            setEnableLoadMore(true);
+            pullLoadMore.setPushRefreshEnable(false);
+            if (footView != null) {
+                addFooterView(footView);
+            }
+            loadMoreEnd(true);
         }
-
-        flag = getData().size();
-
         notifyDataSetChanged();
         pullLoadMore.setPullLoadMoreCompleted();
     }
