@@ -47,18 +47,35 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
     public void onRefresh() {
         list.clear();
         page = 1;
-        list.addAll(creatList(10));
-        pullLoadMore.notifyDataChange();
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        if (page < 10) {
-            list.addAll(creatList(10));
-        } else {
-            list.addAll(creatList(3));
-        }
+    }
+
+//    @Override
+//    public void onRefresh() {
+//        list.clear();
+//        page = 1;
+//        list.addAll(creatList(10));
+//        pullLoadMore.notifyDataChange();
+//    }
+//
+//    @Override
+//    public void onLoadMore() {
+//        page++;
+//        if (page < 10) {
+//            list.addAll(creatList(10));
+//        } else {
+//            list.addAll(creatList(3));
+//        }
+//        pullLoadMore.notifyDataChange();
+//    }
+
+    private void getData() {
+        //onResponse
+        list.addAll(creatList(10));
         pullLoadMore.notifyDataChange();
     }
 

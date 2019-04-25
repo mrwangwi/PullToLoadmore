@@ -20,7 +20,7 @@
     </com.mrwangwei.pullloadmore.PullLoadMoreRecyclerView>
 
 
- 2.in Activity
+2.in Activity
 
      //实例化BaseQuickAdapter并设置给PullLoadMoreRecyclerView
      pullLoadMore.setAdapter(new TestAdapter(R.layout.item_layout, list));
@@ -41,19 +41,24 @@
      //pullLoadMore.setOnPullLoadListener(this);//添加下拉刷新,两种监听自适应，不可同时存在
 
 
- 3.in Listener
+3.in Listener
 
      @Override
      public void onRefresh() {
-         page = 1;
          list.clear();
-         list.addAll(数据);
-         pullLoadMore.notifyDataChange();
+         page = 1;
      }
-
+    
      @Override
      public void onLoadMore() {
          page++;
-         list.addAll(数据);//根据自定义的条数自动判断是否还有更多数据
-         pullLoadMore.notifyDataChange();
      }
+ 
+ 
+4.in Response
+  
+      private void getData() {
+          //onResponse
+          list.addAll(返回的数据集合);
+          pullLoadMore.notifyDataChange();
+      }
