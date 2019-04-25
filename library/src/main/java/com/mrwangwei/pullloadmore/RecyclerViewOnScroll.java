@@ -53,16 +53,33 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         } else {
             mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
         }
-        if (mPullLoadMoreRecyclerView.getPushRefreshEnable()
-                && !mPullLoadMoreRecyclerView.isRefresh()
-                && mPullLoadMoreRecyclerView.isHasMore()
-                && (lastItem == totalItemCount - 1)
-                && !mPullLoadMoreRecyclerView.isLoadMore()
-                && (dx > 0 || dy > 0)) {
-            mPullLoadMoreRecyclerView.setIsLoadMore(true);
-            mPullLoadMoreRecyclerView.loadMore();
-        }
 
+        if (isCanPullIfNotFull) {
+            if (mPullLoadMoreRecyclerView.getPushRefreshEnable()
+                    && !mPullLoadMoreRecyclerView.isRefresh()
+                    && mPullLoadMoreRecyclerView.isHasMore()
+                    && (lastItem == totalItemCount - 1)
+                    && !mPullLoadMoreRecyclerView.isLoadMore()) {
+                mPullLoadMoreRecyclerView.setIsLoadMore(true);
+                mPullLoadMoreRecyclerView.loadMore();
+            }
+        } else {
+            if (mPullLoadMoreRecyclerView.getPushRefreshEnable()
+                    && !mPullLoadMoreRecyclerView.isRefresh()
+                    && mPullLoadMoreRecyclerView.isHasMore()
+                    && (lastItem == totalItemCount - 1)
+                    && !mPullLoadMoreRecyclerView.isLoadMore()
+                    && (dx > 0 || dy > 0)) {
+                mPullLoadMoreRecyclerView.setIsLoadMore(true);
+                mPullLoadMoreRecyclerView.loadMore();
+            }
+        }
+    }
+
+    private boolean isCanPullIfNotFull;
+
+    public void setCanPullIfNotFull(boolean canPullIfNotFull) {
+        isCanPullIfNotFull = canPullIfNotFull;
     }
 
     //To find the maximum value in the array

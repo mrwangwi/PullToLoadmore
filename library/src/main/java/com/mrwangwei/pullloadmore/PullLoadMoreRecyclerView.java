@@ -62,7 +62,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
+        recyclerViewOnScroll = new RecyclerViewOnScroll(this);
+        mRecyclerView.addOnScrollListener(recyclerViewOnScroll);
 
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
@@ -76,6 +77,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         this.addView(view);
 
     }
+
+    private RecyclerViewOnScroll recyclerViewOnScroll;
 
 
     /**
@@ -315,5 +318,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public PullLoadMoreListener getmPullLoadMoreListener() {
         return mPullLoadMoreListener;
+    }
+
+    public void setCanPullIfNotFull(boolean canPullIfNotFull) {
+        recyclerViewOnScroll.setCanPullIfNotFull(canPullIfNotFull);
     }
 }

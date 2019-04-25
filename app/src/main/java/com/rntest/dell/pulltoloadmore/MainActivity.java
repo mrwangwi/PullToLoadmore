@@ -9,7 +9,7 @@ import com.mrwangwei.pullloadmore.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements  PullLoadMoreRecyclerView.PullLoadListener {
+public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private ArrayList<TestBean> list = new ArrayList<>();
     protected PullLoadMoreRecyclerView pullLoadMore;
@@ -32,36 +32,33 @@ public class MainActivity extends AppCompatActivity implements  PullLoadMoreRecy
                 Log.e("setEmptyViewLayout", "setEmptyViewLayout");
             }
         });
+        pullLoadMore.setCanPullIfNotFull(true);
         pullLoadMore.setAdapter(testAdapter);
-//        pullLoadMore.setOnPullLoadMoreListener(this);
-        pullLoadMore.setOnPullLoadListener(this);
+        pullLoadMore.setOnPullLoadMoreListener(this);
     }
 
     private void initView() {
         pullLoadMore = findViewById(R.id.pull_load_more);
     }
 
-//    @Override
-//    public void onRefresh() {
-//        list.clear();
-//        page = 1;
-//        list.addAll(creatList(10));
-//        testAdapter.dataNotify();
-//        list.clear();
-////        testAdapter.dataNotify();
-//    }
-//
-//    @Override
-//    public void onLoadMore() {
-//        page++;
-//        if (page < 3) {
-//            list.addAll(creatList(10));
-//        } else {
-//            list.addAll(creatList(3));
-////            list.addAll(new ArrayList<TestBean>());
-//        }
-//        testAdapter.dataNotify();
-//    }
+    @Override
+    public void onRefresh() {
+        list.clear();
+        page = 1;
+        list.addAll(creatList(10));
+        testAdapter.dataNotify();
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        if (page < 10) {
+            list.addAll(creatList(10));
+        } else {
+            list.addAll(creatList(3));
+        }
+        testAdapter.dataNotify();
+    }
 
 
     private ArrayList<TestBean> creatList(int size) {
@@ -70,13 +67,5 @@ public class MainActivity extends AppCompatActivity implements  PullLoadMoreRecy
             list.add(new TestBean());
         }
         return list;
-    }
-
-    @Override
-    public void onLoadRefresh() {
-        list.clear();
-        page = 1;
-        list.addAll(creatList(20));
-        testAdapter.dataNotify();
     }
 }
