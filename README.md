@@ -7,7 +7,7 @@
 	}
 
     dependencies {
-	     implementation 'com.github.mrwangwi:PullToLoadmore:5.0'
+	     implementation 'com.github.mrwangwi:PullToLoadmore:6.0'
 	}
 
 
