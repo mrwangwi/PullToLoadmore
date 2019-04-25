@@ -23,17 +23,17 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         initView();
         pullLoadMore.setLinearLayout();
         testAdapter = new TestAdapter(R.layout.item_layout, list);
-        testAdapter.setPagesize(10, pullLoadMore);
-        testAdapter.addHeaderView(R.layout.top_layout);
-        testAdapter.addFooterView(R.layout.bottom_layout);
-        testAdapter.setEmptyViewLayout(R.layout.bottom_layout, new View.OnClickListener() {
+        pullLoadMore.setAdapter(testAdapter);
+        pullLoadMore.setPagesize(10);
+        pullLoadMore.setHeaderView(R.layout.top_layout);
+        pullLoadMore.setFooterView(R.layout.bottom_layout);
+        pullLoadMore.setEmptyViewLayout(R.layout.bottom_layout, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("setEmptyViewLayout", "setEmptyViewLayout");
             }
         });
         pullLoadMore.setCanPullIfNotFull(true);
-        pullLoadMore.setAdapter(testAdapter);
         pullLoadMore.setOnPullLoadMoreListener(this);
     }
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
     public void onRefresh() {
         list.clear();
         page = 1;
-        list.addAll(creatList(3));
+        list.addAll(creatList(10));
         testAdapter.dataNotify();
     }
 

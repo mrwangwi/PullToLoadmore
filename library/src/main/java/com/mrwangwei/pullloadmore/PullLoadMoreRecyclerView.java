@@ -39,6 +39,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private Context mContext;
     private TextView loadMoreText;
     private LinearLayout loadMoreLayout;
+    BaseQuickAdapter baseQuickAdapter;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -82,27 +83,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
 
     /**
-     * LinearLayoutManager
-     */
-    public void setLinearLayout() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-    }
-
-    /**
-     * GridLayoutManager
-     */
-
-    public void setGridLayout(int spanCount) {
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, spanCount);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-    }
-
-
-    /**
      * StaggeredGridLayoutManager
      */
 
@@ -134,13 +114,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void scrollToTop() {
         mRecyclerView.scrollToPosition(0);
-    }
-
-
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        if (adapter != null) {
-            mRecyclerView.setAdapter(adapter);
-        }
     }
 
 
@@ -272,16 +245,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     }
 
-
-    public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
-        mPullLoadMoreListener = listener;
-    }
-
-    public void setOnPullLoadListener(PullLoadListener listener) {
-        mPullLoadListener = listener;
-    }
-
-
     public boolean isLoadMore() {
         return isLoadMore;
     }
@@ -323,4 +286,60 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void setCanPullIfNotFull(boolean canPullIfNotFull) {
         recyclerViewOnScroll.setCanPullIfNotFull(canPullIfNotFull);
     }
+
+    public void setPagesize(int pagesize) {
+        baseQuickAdapter.setPagesize(pagesize, this);
+    }
+
+    public void setHeaderView(int layId) {
+        baseQuickAdapter.addHeaderView(layId);
+    }
+
+    public void setFooterView(int layId) {
+        baseQuickAdapter.addFooterView(layId);
+    }
+
+    public void setEmptyViewLayout(int layId) {
+        baseQuickAdapter.setEmptyViewLayout(layId);
+    }
+
+    public void setEmptyViewLayout(int layId, OnClickListener onClickListener) {
+        baseQuickAdapter.setEmptyViewLayout(layId, onClickListener);
+    }
+
+    public void setAdapter(BaseQuickAdapter adapter) {
+        if (adapter != null) {
+            this.baseQuickAdapter = adapter;
+            mRecyclerView.setAdapter(adapter);
+        }
+    }
+
+    /**
+     * LinearLayoutManager
+     */
+    public void setLinearLayout() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    /**
+     * GridLayoutManager
+     */
+
+    public void setGridLayout(int spanCount) {
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, spanCount);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+    public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
+        mPullLoadMoreListener = listener;
+    }
+
+    public void setOnPullLoadListener(PullLoadListener listener) {
+        mPullLoadListener = listener;
+    }
+
 }
