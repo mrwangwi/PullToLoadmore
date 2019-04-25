@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
 
     private ArrayList<TestBean> list = new ArrayList<>();
     protected PullLoadMoreRecyclerView pullLoadMore;
-    private TestAdapter testAdapter;
     private int page = 1;
 
     @Override
@@ -21,20 +20,23 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         initView();
-        pullLoadMore.setLinearLayout();
-        testAdapter = new TestAdapter(R.layout.item_layout, list);
-        pullLoadMore.setAdapter(testAdapter);
-        pullLoadMore.setPagesize(10);
-        pullLoadMore.setHeaderView(R.layout.top_layout);
-        pullLoadMore.setFooterView(R.layout.bottom_layout);
+        //实例化BaseQuickAdapter并设置给PullLoadMoreRecyclerView
+        pullLoadMore.setAdapter(new TestAdapter(R.layout.item_layout, list));
+
+        pullLoadMore.setLinearLayout();//设置布局
+        pullLoadMore.setPagesize(10);//设置分页条数
+        pullLoadMore.setHeaderView(R.layout.top_layout);//设置头布局
+        pullLoadMore.setFooterView(R.layout.bottom_layout);//设置尾布局
+        //设置暂无数据布局，支持添加点击
         pullLoadMore.setEmptyViewLayout(R.layout.bottom_layout, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("setEmptyViewLayout", "setEmptyViewLayout");
+
             }
         });
-        pullLoadMore.setCanPullIfNotFull(true);
-        pullLoadMore.setOnPullLoadMoreListener(this);
+        pullLoadMore.setCanPullIfNotFull(false);//分页内容未充满屏幕自动添加数据
+        pullLoadMore.setOnPullLoadMoreListener(this);//添加下拉刷新上拉加载
+        //pullLoadMore.setOnPullLoadListener(this);//添加下拉刷新,两种监听自适应，不可同时存在
     }
 
     private void initView() {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         list.clear();
         page = 1;
         list.addAll(creatList(10));
-        testAdapter.dataNotify();
+        pullLoadMore.notifyDataChange();
     }
 
     @Override
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         } else {
             list.addAll(creatList(3));
         }
-        testAdapter.dataNotify();
+        pullLoadMore.notifyDataChange();
     }
 
 

@@ -342,4 +342,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mPullLoadListener = listener;
     }
 
+    public void notifyDataChange() {
+        baseQuickAdapter.dataNotify();
+    }
+
 }
