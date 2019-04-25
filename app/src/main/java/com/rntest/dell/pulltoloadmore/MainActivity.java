@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
     public void onRefresh() {
         list.clear();
         page = 1;
-        list.addAll(creatList(10));
+        list.addAll(creatList(3));
         testAdapter.dataNotify();
     }
 

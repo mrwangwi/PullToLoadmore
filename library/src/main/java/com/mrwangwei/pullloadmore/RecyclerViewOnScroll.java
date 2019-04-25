@@ -1,5 +1,6 @@
 package com.mrwangwei.pullloadmore;
 
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +62,12 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
                     && (lastItem == totalItemCount - 1)
                     && !mPullLoadMoreRecyclerView.isLoadMore()) {
                 mPullLoadMoreRecyclerView.setIsLoadMore(true);
-                mPullLoadMoreRecyclerView.loadMore();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullLoadMoreRecyclerView.loadMore();
+                    }
+                }, 1);
             }
         } else {
             if (mPullLoadMoreRecyclerView.getPushRefreshEnable()
