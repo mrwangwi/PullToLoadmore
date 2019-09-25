@@ -2,8 +2,8 @@ package com.rntest.dell.pulltoloadmore;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mrwangwei.pullloadmore.PullLoadMoreRecyclerView;
 
@@ -26,9 +26,14 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         pullLoadMore.setLinearLayout();//设置布局
         pullLoadMore.setPagesize(10);//设置分页条数
         pullLoadMore.setHeaderView(R.layout.top_layout);//设置头布局
-        pullLoadMore.setFooterView(R.layout.bottom_layout);//设置尾布局
+        pullLoadMore.setFooterView(R.layout.bottom_layout, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "6666666", Toast.LENGTH_LONG).show();
+            }
+        });//设置尾布局
         //设置暂无数据布局，支持添加点击
-        pullLoadMore.setEmptyViewLayout(R.layout.bottom_layout, new View.OnClickListener() {
+        pullLoadMore.setEmptyViewLayout(R.layout.bottom_layout, "6666", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -43,35 +48,31 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         pullLoadMore = findViewById(R.id.pull_load_more);
     }
 
+//    @Override
+//    public void onRefresh() {
+//        list.clear();
+//        page = 1;
+//    }
+
+
     @Override
     public void onRefresh() {
         list.clear();
         page = 1;
+        list.addAll(creatList(6));
+        pullLoadMore.notifyDataChange();
     }
 
     @Override
     public void onLoadMore() {
         page++;
+        if (page < 10) {
+            list.addAll(creatList(10));
+        } else {
+            list.addAll(creatList(3));
+        }
+        pullLoadMore.notifyDataChange();
     }
-
-//    @Override
-//    public void onRefresh() {
-//        list.clear();
-//        page = 1;
-//        list.addAll(creatList(10));
-//        pullLoadMore.notifyDataChange();
-//    }
-//
-//    @Override
-//    public void onLoadMore() {
-//        page++;
-//        if (page < 10) {
-//            list.addAll(creatList(10));
-//        } else {
-//            list.addAll(creatList(3));
-//        }
-//        pullLoadMore.notifyDataChange();
-//    }
 
     private void getData() {
         //onResponse

@@ -20,6 +20,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mrwangwei.pullloadmore.animation.AlphaInAnimation;
 import com.mrwangwei.pullloadmore.animation.BaseAnimation;
@@ -1137,6 +1138,12 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         footView = view;
     }
 
+    public void addFooterView(int layId, View.OnClickListener onClickListener) {
+        View view = LayoutInflater.from(getRecyclerView().getContext()).inflate(layId, getRecyclerView(), false);
+        footView = view;
+        footView.setOnClickListener(onClickListener);
+    }
+
     private View footView;
 
     /**
@@ -2148,6 +2155,12 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
             if (onClickListener != null) {
                 getEmptyView().setOnClickListener(onClickListener);
             }
+            TextView textView = (TextView) getEmptyView().findViewById(R.id.tv_dec);
+            if (textView != null && tv_dec != null) {
+                textView.setText(tv_dec);
+            }
+
+
         } else {
             setEmptyView(R.layout.no_data_layout);
         }
@@ -2162,9 +2175,18 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         emptyView = layId;
     }
 
+    private String tv_dec;
+
     public void setEmptyViewLayout(int layId, View.OnClickListener onClickListener) {
         isSetEmptyViewLayout = true;
         emptyView = layId;
+        this.onClickListener = onClickListener;
+    }
+
+    public void setEmptyViewLayout(int layId, String tv_dec, View.OnClickListener onClickListener) {
+        isSetEmptyViewLayout = true;
+        emptyView = layId;
+        this.tv_dec = tv_dec;
         this.onClickListener = onClickListener;
     }
 

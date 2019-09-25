@@ -299,12 +299,20 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         baseQuickAdapter.addFooterView(layId);
     }
 
+    public void setFooterView(int layId, View.OnClickListener onClickListener) {
+        baseQuickAdapter.addFooterView(layId, onClickListener);
+    }
+
     public void setEmptyViewLayout(int layId) {
         baseQuickAdapter.setEmptyViewLayout(layId);
     }
 
     public void setEmptyViewLayout(int layId, OnClickListener onClickListener) {
         baseQuickAdapter.setEmptyViewLayout(layId, onClickListener);
+    }
+
+    public void setEmptyViewLayout(int layId, String tv_dec, OnClickListener onClickListener) {
+        baseQuickAdapter.setEmptyViewLayout(layId, tv_dec, onClickListener);
     }
 
     public void setAdapter(BaseQuickAdapter adapter) {
