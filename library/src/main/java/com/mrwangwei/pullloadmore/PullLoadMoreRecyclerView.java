@@ -40,6 +40,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private TextView loadMoreText;
     private LinearLayout loadMoreLayout;
     BaseQuickAdapter baseQuickAdapter;
+    private boolean isShowFoot;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -77,6 +78,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         this.addView(view);
 
+    }
+
+    public void setRefreshFoot(boolean b) {
+        isShowFoot = b;
     }
 
     private RecyclerViewOnScroll recyclerViewOnScroll;
@@ -208,6 +213,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
+            if (isShowFoot) {
+                mFooterView.setVisibility(VISIBLE);
+            } else {
+                mFooterView.setVisibility(GONE);
+            }
             isLoadmore = true;
             mFooterView.animate()
                     .translationY(0)
@@ -235,7 +245,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void setPullLoadMoreCompleted() {
         isRefresh = false;
         setRefreshing(false);
-
         isLoadMore = false;
         mFooterView.animate()
                 .translationY(mFooterView.getHeight())

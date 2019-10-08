@@ -1,6 +1,7 @@
 package com.rntest.dell.pulltoloadmore;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
         initView();
         //实例化BaseQuickAdapter并设置给PullLoadMoreRecyclerView
         pullLoadMore.setAdapter(new TestAdapter(R.layout.item_layout, list));
-
+        pullLoadMore.setRefreshFoot(true);
         pullLoadMore.setLinearLayout();//设置布局
         pullLoadMore.setPagesize(10);//设置分页条数
         pullLoadMore.setHeaderView(R.layout.top_layout);//设置头布局
@@ -59,19 +60,24 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
     public void onRefresh() {
         list.clear();
         page = 1;
-        list.addAll(creatList(6));
+        list.addAll(creatList(10));
         pullLoadMore.notifyDataChange();
     }
 
     @Override
     public void onLoadMore() {
-        page++;
-        if (page < 10) {
-            list.addAll(creatList(10));
-        } else {
-            list.addAll(creatList(3));
-        }
-        pullLoadMore.notifyDataChange();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                page++;
+                if (page < 10) {
+                    list.addAll(creatList(10));
+                } else {
+                    list.addAll(creatList(3));
+                }
+                pullLoadMore.notifyDataChange();
+            }
+        },2000);
     }
 
     private void getData() {
