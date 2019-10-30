@@ -327,6 +327,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void setAdapter(BaseQuickAdapter adapter) {
         if (adapter != null) {
             this.baseQuickAdapter = adapter;
+            baseQuickAdapter.setPullLoadMore(this);
             mRecyclerView.setAdapter(adapter);
         }
     }

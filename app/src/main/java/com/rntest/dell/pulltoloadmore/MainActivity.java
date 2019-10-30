@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements PullLoadMoreRecyc
                 }
                 pullLoadMore.notifyDataChange();
             }
-        },2000);
+        }, 2000);
     }
 
     private void getData() {

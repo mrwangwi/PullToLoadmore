@@ -2149,6 +2149,10 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         this.setRecyclerView(pullLoadMore.getRecyclerView());
     }
 
+    public void setPullLoadMore(PullLoadMoreRecyclerView pullLoadMore) {
+        this.pullLoadMore = pullLoadMore;
+    }
+
     private void showEmptyView() {
         if (isSetEmptyViewLayout) {
             setEmptyView(emptyView);
